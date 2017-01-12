@@ -21,16 +21,19 @@ struct _ccu_nkmp {
 };
 
 static void ccu_nkmp_find_best(unsigned long parent, unsigned long rate,
-			       struct _ccu_nkmp *nkmp)
+			       struct _ccu_nkmp *nkmp, struct ccu_nkmp *_nkmp)
 {
 	unsigned long best_rate = 0;
 	unsigned long best_n = 0, best_k = 0, best_m = 0, best_p = 0;
-	unsigned long _n, _k, _m, _p;
+	unsigned long _n, _k, _m, _p, _max_p;
+
+	_max_p = (_nkmp->max_rate_for_p == 0 || rate <= _nkmp->max_rate_for_p) ?
+		nkmp->max_p : nkmp->min_p;
 
 	for (_k = nkmp->min_k; _k <= nkmp->max_k; _k++) {
 		for (_n = nkmp->min_n; _n <= nkmp->max_n; _n++) {
 			for (_m = nkmp->min_m; _m <= nkmp->max_m; _m++) {
-				for (_p = nkmp->min_p; _p <= nkmp->max_p; _p <<= 1) {
+				for (_p = nkmp->min_p; _p <= _max_p; _p <<= 1) {
 					unsigned long tmp_rate;
 
 					tmp_rate = parent * _n * _k / (_m * _p);
@@ -125,7 +128,7 @@ static long ccu_nkmp_round_rate(struct clk_hw *hw, unsigned long rate,
 	_nkmp.min_p = 1;
 	_nkmp.max_p = nkmp->p.max ?: 1 << ((1 << nkmp->p.width) - 1);
 
-	ccu_nkmp_find_best(*parent_rate, rate, &_nkmp);
+	ccu_nkmp_find_best(*parent_rate, rate, &_nkmp, nkmp);
 
 	return *parent_rate * _nkmp.n * _nkmp.k / (_nkmp.m * _nkmp.p);
 }
@@ -147,7 +150,7 @@ static int ccu_nkmp_set_rate(struct clk_hw *hw, unsigned long rate,
 	_nkmp.min_p = 1;
 	_nkmp.max_p = nkmp->p.max ?: 1 << ((1 << nkmp->p.width) - 1);
 
-	ccu_nkmp_find_best(parent_rate, rate, &_nkmp);
+	ccu_nkmp_find_best(parent_rate, rate, &_nkmp, nkmp);
 
 	spin_lock_irqsave(nkmp->common.lock, flags);
 
