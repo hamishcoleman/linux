@@ -33,6 +33,7 @@ struct ccu_nkmp {
 	struct ccu_mult_internal	k;
 	struct ccu_div_internal		m;
 	struct ccu_div_internal		p;
+	unsigned long max_rate_for_p;
 
 	struct ccu_common	common;
 };
