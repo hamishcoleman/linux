@@ -242,6 +242,7 @@ nlt	NLT Technologies, Ltd.
 nokia	Nokia
 nordic	Nordic Semiconductor
 nutsboard	NutsBoard
+nsiway	Shenzhen Nsiway Technology Co., Ltd.
 nuvoton	Nuvoton Technology Corporation
 nvd	New Vision Display
 nvidia	NVIDIA
