@@ -66,6 +66,8 @@
 
 	leds {
 		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&leds_opc>, <&leds_r_opc>;
 
 		pwr_led {
 			label = "orangepi:green:pwr";
@@ -141,6 +143,20 @@
 
 &ohci1 {
 	status = "okay";
+};
+
+&pio {
+	leds_opc: led_pins@0 {
+		pins = "PA15";
+		function = "gpio_out";
+	};
+};
+
+&r_pio {
+	leds_r_opc: led_pins@0 {
+		pins = "PL10";
+		function = "gpio_out";
+	};
 };
 
 &uart0 {
