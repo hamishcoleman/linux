@@ -116,7 +116,6 @@
 	wifi_wake_xr819: wifi_wake_xr819@0 {
 		allwinner,pins = "PG10";
                 allwinner,function = "irq";
-                allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
 	};
 };
 
