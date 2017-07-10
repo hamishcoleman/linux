@@ -169,6 +169,11 @@
 		pins = "PL10";
 		function = "gpio_out";
 	};
+
+        vdd_cpux_r_opc: regulator_pins@0 {
+                pins = "PL6";
+                function = "gpio_out";
+        };
 };
 
 &uart0 {
