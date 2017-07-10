@@ -1,3 +1,16 @@
+This Repository
+===============
+
+This Linux Kernel Repository is used to build a working mainline kernel
+for the Orange Pi Zero Single Board Computer.
+
+Branches exist for to track each of the original patches that were merged
+to make this tree - these branches may rebase at any time as many of them
+are not tracking actual git repositories.
+
+The buildable and fully merged tree is in the "mvp" branch and this branch
+will be re-created to remerge the patches for any new upstream kernel.
+
 Linux kernel
 ============
 
