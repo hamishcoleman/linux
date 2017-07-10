@@ -1966,7 +1966,7 @@ void xradio_rx_cb(struct xradio_vif *priv,
 		SYS_WARN(1);
        
 	if (arg->rxedRate >= 14) {
-		hdr->flag |= RX_FLAG_HT;
+		hdr->encoding |= RX_ENC_HT;
 		hdr->rate_idx = arg->rxedRate - 14;
 	} else if (arg->rxedRate >= 4) {
 		if (hdr->band == NL80211_BAND_5GHZ)
