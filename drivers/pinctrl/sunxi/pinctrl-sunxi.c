@@ -1351,6 +1351,7 @@ int sunxi_pinctrl_init_with_variant(struct platform_device *pdev,
 	clk = devm_clk_get(&pdev->dev, NULL);
 	if (IS_ERR(clk)) {
 		ret = PTR_ERR(clk);
+		dev_info(&pdev->dev, "Could not get clock: %i\n",ret);
 		goto gpiochip_error;
 	}
 
