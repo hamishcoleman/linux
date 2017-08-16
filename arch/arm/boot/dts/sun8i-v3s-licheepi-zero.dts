@@ -77,12 +77,20 @@
 	};
 };
 
+&ehci0 {
+	status = "okay";
+};
+
 &mmc0 {
 	pinctrl-0 = <&mmc0_pins_a>;
 	pinctrl-names = "default";
 	broken-cd;
 	bus-width = <4>;
 	vmmc-supply = <&reg_vcc3v3>;
+	status = "okay";
+};
+
+&ohci0 {
 	status = "okay";
 };
 
