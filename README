@@ -2,7 +2,8 @@ This Repository
 ===============
 
 This Linux Kernel Repository is used to build a working mainline kernel
-for the Orange Pi Zero Single Board Computer.
+for the Orange Pi Zero Single Board Computer, and several other Allwinner
+SoCs, as well as working with the qemu arm 'virt' machine.
 
 Branches exist for to track each of the original patches that were merged
 to make this tree - these branches may rebase at any time as many of them
