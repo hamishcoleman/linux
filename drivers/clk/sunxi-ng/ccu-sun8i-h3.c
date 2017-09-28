@@ -29,15 +29,22 @@
 
 #include "ccu-sun8i-h3.h"
 
-static SUNXI_CCU_NKMP_WITH_GATE_LOCK(pll_cpux_clk, "pll-cpux",
-				     "osc24M", 0x000,
-				     8, 5,	/* N */
-				     4, 2,	/* K */
-				     0, 2,	/* M */
-				     16, 2,	/* P */
-				     BIT(31),	/* gate */
-				     BIT(28),	/* lock */
-				     0);
+static struct ccu_nkmp pll_cpux_clk = {
+	.enable		= BIT(31),
+	.lock		= BIT(28),
+	.n		= _SUNXI_CCU_MULT(8, 5),
+	.k		= _SUNXI_CCU_MULT(4, 2),
+	.m		= _SUNXI_CCU_DIV_MAX(0, 2, 1),
+	.p		= _SUNXI_CCU_DIV(16, 2),
+	.max_rate_for_p	= 288000000,
+	.common		= {
+		.reg		= 0x000,
+		.hw.init	= CLK_HW_INIT("pll-cpux",
+					      "osc24M",
+					      &ccu_nkmp_ops,
+					      0),
+	},
+};
 
 /*
  * The Audio PLL is supposed to have 4 outputs: 3 fixed factors from
@@ -135,7 +142,7 @@ static SUNXI_CCU_NM_WITH_FRAC_GATE_LOCK(pll_de_clk, "pll-de",
 static const char * const cpux_parents[] = { "osc32k", "osc24M",
 					     "pll-cpux" , "pll-cpux" };
 static SUNXI_CCU_MUX(cpux_clk, "cpux", cpux_parents,
-		     0x050, 16, 2, CLK_IS_CRITICAL);
+		     0x050, 16, 2, CLK_IS_CRITICAL | CLK_SET_RATE_PARENT);
 
 static SUNXI_CCU_M(axi_clk, "axi", "cpux", 0x050, 0, 2, 0);
 
