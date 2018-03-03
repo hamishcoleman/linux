@@ -118,3 +118,28 @@
 	usb0_id_det-gpio = <&pio 5 6 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 };
+
+&simplefb_lcd {
+        clocks = <&ccu CLK_BUS_TCON0>, <&ccu 0x23>,
+                 <&ccu 0x3f>, <&ccu CLK_TCON0>;
+};
+
+&pio {
+        ahci_pwr_pin@0 {
+                allwinner,pins = "PB8";
+                allwinner,function = "gpio_out";
+                allwinner,drive = <0x0>;
+                allwinner,pull = <0x0>;
+        };
+};
+
+&display_clocks {
+    status = "disabled";
+};
+&mixer0 {
+    status = "disabled";
+};
+&tcon0 {
+    status = "disabled";
+};
+

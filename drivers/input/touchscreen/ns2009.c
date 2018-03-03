@@ -210,3 +210,5 @@ static struct i2c_driver ns2009_ts_driver = {
 	},
 };
 module_i2c_driver(ns2009_ts_driver);
+
+MODULE_LICENSE("GPL");
