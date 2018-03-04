@@ -949,9 +949,10 @@ void xradio_multicast_stop_work(struct work_struct *work)
 	}
 }
 
-void xradio_mcast_timeout(unsigned long arg)
+void xradio_mcast_timeout(struct timer_list *t)
 {
-	struct xradio_vif *priv = (struct xradio_vif *)arg;
+	struct xradio_vif *priv =
+		from_timer(priv, t, mcast_timeout);
 
 	ap_printk(XRADIO_DBG_WARN, "Multicast delivery timeout.\n");
 	spin_lock_bh(&priv->ps_state_lock);
@@ -1203,7 +1204,7 @@ static int xradio_upload_null(struct xradio_vif *priv)
 		.rate = 0xFF,
 	};
 
-	frame.skb = ieee80211_nullfunc_get(priv->hw, priv->vif);
+	frame.skb = ieee80211_nullfunc_get(priv->hw, priv->vif, false);
 	if (SYS_WARN(!frame.skb))
 		return -ENOMEM;
 

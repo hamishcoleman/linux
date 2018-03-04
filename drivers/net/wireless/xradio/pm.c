@@ -256,7 +256,7 @@ void xradio_pm_unlock_awake(struct xradio_pm_state *pm)
 
 #else /* CONFIG_WAKELOCK */
 
-static void xradio_pm_stay_awake_tmo(unsigned long arg)
+static void xradio_pm_stay_awake_tmo(struct timer_list *t)
 {
 }
 
@@ -268,9 +268,7 @@ int xradio_pm_init(struct xradio_pm_state *pm,
 
 	ret = xradio_pm_init_common(pm, hw_priv);
 	if (!ret) {
-		init_timer(&pm->stay_awake);
-		pm->stay_awake.data = (unsigned long)pm;
-		pm->stay_awake.function = xradio_pm_stay_awake_tmo;
+		timer_setup(&pm->stay_awake, xradio_pm_stay_awake_tmo, 0);
 	} else 
 		pm_printk(XRADIO_DBG_ERROR,"xradio_pm_init_common failed!\n");
 	return ret;

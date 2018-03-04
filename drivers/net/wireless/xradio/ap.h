@@ -46,7 +46,7 @@ void xradio_set_tim_work(struct work_struct *work);
 void xradio_set_cts_work(struct work_struct *work);
 void xradio_multicast_start_work(struct work_struct *work);
 void xradio_multicast_stop_work(struct work_struct *work);
-void xradio_mcast_timeout(unsigned long arg);
+void xradio_mcast_timeout(struct timer_list *t);
 int xradio_find_link_id(struct xradio_vif *priv, const u8 *mac);
 int xradio_alloc_link_id(struct xradio_vif *priv, const u8 *mac);
 void xradio_link_id_work(struct work_struct *work);

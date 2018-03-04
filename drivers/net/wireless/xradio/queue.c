@@ -163,11 +163,11 @@ static void __xradio_queue_gc(struct xradio_queue *queue,
 	}
 }
 
-static void xradio_queue_gc(unsigned long arg)
+static void xradio_queue_gc(struct timer_list *t)
 {
 	LIST_HEAD(list);
 	struct xradio_queue *queue =
-		(struct xradio_queue *)arg;
+		from_timer(queue, t, gc);
 
 	spin_lock_bh(&queue->lock);
 	__xradio_queue_gc(queue, &list, true);
@@ -217,9 +217,7 @@ int xradio_queue_init(struct xradio_queue *queue,
 	INIT_LIST_HEAD(&queue->pending);
 	INIT_LIST_HEAD(&queue->free_pool);
 	spin_lock_init(&queue->lock);
-	init_timer(&queue->gc);
-	queue->gc.data = (unsigned long)queue;
-	queue->gc.function = xradio_queue_gc;
+	timer_setup(&queue->gc, xradio_queue_gc, 0);
 
 	queue->pool = kzalloc(sizeof(struct xradio_queue_item) * capacity,
 	                         GFP_KERNEL);

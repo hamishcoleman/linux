@@ -17,6 +17,7 @@
 #include <linux/vmalloc.h>
 #include <linux/random.h>
 #include <linux/sched.h>
+#include <linux/timer.h>
 #include <net/mac80211.h>
 #include <net/cfg80211.h>
 #include <linux/of_net.h>
@@ -441,9 +442,7 @@ struct ieee80211_hw *xradio_init_common(size_t hw_priv_data_len)
 	INIT_WORK(&hw_priv->event_handler, xradio_event_handler);
 	INIT_WORK(&hw_priv->ba_work, xradio_ba_work);
 	spin_lock_init(&hw_priv->ba_lock);
-	init_timer(&hw_priv->ba_timer);
-	hw_priv->ba_timer.data = (unsigned long)hw_priv;
-	hw_priv->ba_timer.function = xradio_ba_timer;
+	timer_setup(&hw_priv->ba_timer, xradio_ba_timer, 0);
 
 	if (unlikely(xradio_queue_stats_init(&hw_priv->tx_queue_stats,
 			WLAN_LINK_ID_MAX,xradio_skb_dtor, hw_priv))) {

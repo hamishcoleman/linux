@@ -108,7 +108,7 @@ int xradio_enable_listening(struct xradio_vif *priv, struct ieee80211_channel *c
 int xradio_disable_listening(struct xradio_vif *priv);
 int xradio_set_uapsd_param(struct xradio_vif *priv, const struct wsm_edca_params *arg);
 void xradio_ba_work(struct work_struct *work);
-void xradio_ba_timer(unsigned long arg);
+void xradio_ba_timer(struct timer_list *t);
 const u8 *xradio_get_ie(u8 *start, size_t len, u8 ie);
 int xradio_vif_setup(struct xradio_vif *priv);
 int xradio_setup_mac_pvif(struct xradio_vif *priv);
